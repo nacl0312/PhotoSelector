@@ -201,11 +201,13 @@ public class PhotoSelectorActivity extends AppCompatActivity implements OnClickL
                 finish();
             }
         } else if (v == btPreviewImage) {// 预览照片
-            Intent intent = new Intent(this, PhotoViewActivity.class);
-            photoList = new ArrayList<>();
-            photoList.addAll(SELECTED_PHOTOS);
-            intent.putExtra("PhotoList", photoList);
-            startActivityForResult(intent, REQUEST_PREVIEW_PHOTO);
+            if (SELECTED_PHOTOS.size() != 0) {
+                Intent intent = new Intent(this, PhotoViewActivity.class);
+                photoList = new ArrayList<>();
+                photoList.addAll(SELECTED_PHOTOS);
+                intent.putExtra("PhotoList", photoList);
+                startActivityForResult(intent, REQUEST_PREVIEW_PHOTO);
+            }
         } else if (v == btSelectFullImage) {// 选择全图
             PhotoSelectorSetting.IS_SELECTED_FULL_IMAGE = !PhotoSelectorSetting.IS_SELECTED_FULL_IMAGE;
             changeOKButtonStatus();
