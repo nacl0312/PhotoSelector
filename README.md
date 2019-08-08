@@ -8,6 +8,7 @@
 ![照片选择器](./Demo6.jpg)
 
 ##如何使用
+
 1.Gradle添加依赖:
 
 (1)在Project的build.gradle中添加:
