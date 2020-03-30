@@ -25,7 +25,7 @@
 
 	dependencies {
 		...
-	    compile 'com.github.NaclFire:PhotoSelector:1.2'
+	    implementation 'com.github.NaclFire:PhotoSelector:1.2'
 	}
 
 
