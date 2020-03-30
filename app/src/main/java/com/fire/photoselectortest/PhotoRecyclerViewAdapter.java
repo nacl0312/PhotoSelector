@@ -40,7 +40,7 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Glide.with(context).load(list.get(position)).asBitmap().into(holder.photo);
+        Glide.with(context).load(list.get(position)).into(holder.photo);
         holder.fullImage.setVisibility(isFullImage ? View.VISIBLE : View.INVISIBLE);
     }
 

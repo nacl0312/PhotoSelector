@@ -65,7 +65,7 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
             holder.rootView.setBackgroundColor(context.getResources().getColor(R.color.textWriteColor));
         }
         holder.tvAlbumName.setText(list.get(position).getFolderName());
-        Glide.with(context).load(list.get(position).getImagePaths().get(0)).asBitmap().into(holder.ivFolderThumb);
+        Glide.with(context).load(list.get(position).getImagePaths().get(0)).into(holder.ivFolderThumb);
         String string = context.getResources().getString(R.string.album_photo_number);
         String format = String.format(string, list.get(position).getImageCounts());
         holder.tvAlbumPhotoNumber.setText(format);
