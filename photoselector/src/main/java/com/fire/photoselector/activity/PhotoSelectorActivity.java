@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fire.photoselector.models.PhotoMessage.PHOTOS_LIST_TRANSFER;
 import static com.fire.photoselector.models.PhotoMessage.SELECTED_PHOTOS;
 import static com.fire.photoselector.models.PhotoSelectorSetting.COLUMN_COUNT;
 import static com.fire.photoselector.models.PhotoSelectorSetting.IS_SELECTED_FULL_IMAGE;
@@ -79,7 +80,6 @@ public class PhotoSelectorActivity extends AppCompatActivity implements OnClickL
     private List<String> chileList;
     private List<String> value;
     private List<String> photoFolder;
-    private ArrayList<String> photoList;
     private RecyclerView rvPhotoList;
 
     @Override
@@ -203,9 +203,8 @@ public class PhotoSelectorActivity extends AppCompatActivity implements OnClickL
         } else if (v == btPreviewImage) {// 预览照片
             if (SELECTED_PHOTOS.size() != 0) {
                 Intent intent = new Intent(this, PhotoViewActivity.class);
-                photoList = new ArrayList<>();
-                photoList.addAll(SELECTED_PHOTOS);
-                intent.putExtra("PhotoList", photoList);
+                PHOTOS_LIST_TRANSFER.clear();
+                PHOTOS_LIST_TRANSFER.addAll(SELECTED_PHOTOS);
                 startActivityForResult(intent, REQUEST_PREVIEW_PHOTO);
             }
         } else if (v == btSelectFullImage) {// 选择全图
@@ -254,9 +253,8 @@ public class PhotoSelectorActivity extends AppCompatActivity implements OnClickL
                 photoListAdapter.notifyDataSetChanged();
             } else {
                 Intent intent = new Intent(PhotoSelectorActivity.this, PhotoViewActivity.class);
-                photoList = new ArrayList<>();
-                photoList.addAll(photoFolder);
-                intent.putExtra("PhotoList", photoList);
+                PHOTOS_LIST_TRANSFER.clear();
+                PHOTOS_LIST_TRANSFER.addAll(photoFolder);
                 intent.putExtra("Index", position);
                 startActivityForResult(intent, REQUEST_PREVIEW_PHOTO);
             }
@@ -269,10 +267,10 @@ public class PhotoSelectorActivity extends AppCompatActivity implements OnClickL
         switch (requestCode) {
             case REQUEST_PREVIEW_PHOTO:
                 if (resultCode == RESULT_OK) {
-                    photoList = new ArrayList<>();
-                    photoList.addAll(SELECTED_PHOTOS);
+                    PHOTOS_LIST_TRANSFER.clear();
+                    PHOTOS_LIST_TRANSFER.addAll(SELECTED_PHOTOS);
                     Intent intent = new Intent();
-                    intent.putExtra(LAST_MODIFIED_LIST, photoList);
+                    intent.putExtra(LAST_MODIFIED_LIST, PHOTOS_LIST_TRANSFER);
                     setResult(RESULT_OK, intent);
                     finish();
                 }

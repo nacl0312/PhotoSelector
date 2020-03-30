@@ -12,6 +12,7 @@ import static com.fire.photoselector.models.PhotoSelectorSetting.MAX_PHOTO_SUM;
 
 public class PhotoMessage {
     public static List<String> SELECTED_PHOTOS = new ArrayList<>();
+    public static ArrayList<String> PHOTOS_LIST_TRANSFER = new ArrayList<>();
 
     public static boolean isPhotoSelected(String path) {
         return SELECTED_PHOTOS.contains(path);

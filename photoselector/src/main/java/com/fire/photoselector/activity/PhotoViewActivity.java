@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +18,7 @@ import com.fire.photoselector.models.PhotoMessage;
 
 import java.util.ArrayList;
 
+import static com.fire.photoselector.models.PhotoMessage.PHOTOS_LIST_TRANSFER;
 import static com.fire.photoselector.models.PhotoMessage.SELECTED_PHOTOS;
 import static com.fire.photoselector.models.PhotoSelectorSetting.LAST_MODIFIED_LIST;
 import static com.fire.photoselector.models.PhotoSelectorSetting.MAX_PHOTO_SUM;
@@ -37,7 +36,6 @@ public class PhotoViewActivity extends AppCompatActivity implements OnClickListe
     private ImageView ivPhotoSelected;
     private ViewPager vpPhotoView;
     private TextView tvPhotoIndicator;
-    private ArrayList<String> photoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,13 +50,8 @@ public class PhotoViewActivity extends AppCompatActivity implements OnClickListe
         btSelectOK.setOnClickListener(this);
         ivPhotoSelected.setOnClickListener(this);
         Intent intent = getIntent();
-        photoList = intent.getStringArrayListExtra("PhotoList");
-        if (photoList == null) {
-            photoList = new ArrayList<>();
-            Toast.makeText(this, R.string.get_album_failed, Toast.LENGTH_SHORT).show();
-        }
         int index = intent.getIntExtra("Index", 0);
-        photoViewAdapter = new PhotoViewAdapter(this, photoList);
+        photoViewAdapter = new PhotoViewAdapter(this, PHOTOS_LIST_TRANSFER);
         vpPhotoView.setAdapter(photoViewAdapter);
         vpPhotoView.setCurrentItem(index, false);
         vpPhotoView.addOnPageChangeListener(new PageChangeListener());
@@ -84,7 +77,7 @@ public class PhotoViewActivity extends AppCompatActivity implements OnClickListe
             // 当前ViewPager页面脚标
             int position = vpPhotoView.getCurrentItem();
             // 添加/删除当前页面照片
-            boolean result = PhotoMessage.togglePhotoSelected(photoList.get(position));
+            boolean result = PhotoMessage.togglePhotoSelected(PHOTOS_LIST_TRANSFER.get(position));
             if (result) {
                 // 添加/删除成功
                 changePhotoSelectStatus(position);
@@ -130,7 +123,7 @@ public class PhotoViewActivity extends AppCompatActivity implements OnClickListe
      * @param position
      */
     private void changePhotoSelectStatus(int position) {
-        if (PhotoMessage.isPhotoSelected(photoList.get(position))) {
+        if (PhotoMessage.isPhotoSelected(PHOTOS_LIST_TRANSFER.get(position))) {
             ivPhotoSelected.setImageResource(R.drawable.compose_photo_preview_right);
         } else {
             ivPhotoSelected.setImageResource(R.drawable.compose_photo_preview_default);
@@ -161,7 +154,7 @@ public class PhotoViewActivity extends AppCompatActivity implements OnClickListe
      */
     private void changePhotoIndicator(int position) {
         String string = getString(R.string.photo_sum_indicator);
-        String format = String.format(string, position, photoList.size());
+        String format = String.format(string, position, PHOTOS_LIST_TRANSFER.size());
         tvPhotoIndicator.setText(format);
     }
 }
